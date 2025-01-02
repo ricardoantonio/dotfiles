@@ -60,7 +60,7 @@ brew install lazygit
 brew install starship
 brew install eza
 brew install git
-brew install zfz
+brew install fzf
 brew install tree
 brew install zoxide
 brew install fd
