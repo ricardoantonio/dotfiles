@@ -81,9 +81,7 @@ brew install --cask google-chrome
 
 # Install utilities
 brew install --cask alfred
-brew install --cask obsidian
 brew install --cask tor-browser
-brew install --cask logi-options+
 
 # Install programing tools and languages
 brew install python
