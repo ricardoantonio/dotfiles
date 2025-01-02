@@ -15,7 +15,7 @@ Follow the instructions displayed after the installation (they might include add
 ### Clone This Repository
 
 ```bash
-git clone --recursive git@github.com:ricardoantonio/dotfiles.git ~/.config
+git clone https://github.com/ricardoantonio/dotfiles.git ~/.config
 ```
 
 ### Run Installation Script
