@@ -71,6 +71,7 @@ brew install --cask font-jetbrains-mono
 brew install --cask font-jetbrains-mono-nerd-font
 brew install --cask font-cascadia-code
 brew install --cask font-inter
+brew install --cask font-roboto
 
 # Install other tools
 brew install --cask visual-studio-code
