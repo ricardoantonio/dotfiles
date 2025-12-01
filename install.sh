@@ -73,6 +73,7 @@ brew install --cask font-cascadia-code
 brew install --cask font-inter
 brew install --cask font-roboto
 brew install --cask font-hack-nerd-font
+brew install --cask font-noto-sans
 
 # Install other tools
 brew install --cask visual-studio-code
@@ -82,7 +83,6 @@ brew install --cask firefox@developer-edition
 brew install --cask google-chrome
 
 # Install utilities
-brew install music-presence
 brew install --cask tor-browser
 
 # Install programing tools and languages
