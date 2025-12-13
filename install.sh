@@ -74,6 +74,7 @@ brew install --cask font-inter
 brew install --cask font-roboto
 brew install --cask font-hack-nerd-font
 brew install --cask font-noto-sans
+brew install --cask font-source-serif-4
 
 # Install other tools
 brew install --cask visual-studio-code
