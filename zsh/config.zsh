@@ -23,6 +23,7 @@ alias v=nvim
 alias reload="source ~/.zshrc"
 alias ls="eza --icons"
 alias ll="eza --icons -l"
+alias cr="cargo run"
 
 # ---- Plugins ----
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
