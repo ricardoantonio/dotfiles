@@ -63,6 +63,12 @@ brew install fzf
 brew install tree
 brew install zoxide
 brew install fd
+brew install yazi
+brew install poppler
+brew install ffmpeg
+brew install resvg
+brew install imagemagick
+brew install ghostscript
 brew install sleek    # Sql formatter
 brew install watchman # react native watcher
 
