@@ -8,7 +8,7 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 # Go binaries
 export PATH=$PATH:$(go env GOPATH)/bin
 # Node.js v22 LTS
-export PATH=/opt/homebrew/opt/node@22/bin:$PATH
+export PATH=/opt/homebrew/opt/node@24/bin:$PATH
 # PostgreSQL
 export PATH=/opt/homebrew/opt/postgresql@16/bin:$PATH
 
