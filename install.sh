@@ -94,7 +94,7 @@ brew install --cask tor-browser
 
 # Install programing tools and languages
 brew install python
-brew install node@22
+brew install node@24
 brew install go
 brew install --cask zulu@17 # JDK 17
 
