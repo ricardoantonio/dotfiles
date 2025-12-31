@@ -88,6 +88,7 @@ brew install --cask yaak
 brew install --cask dbgate
 brew install --cask firefox@developer-edition
 brew install --cask google-chrome
+brew install --cask obsidian
 
 # Install utilities
 brew install --cask tor-browser
