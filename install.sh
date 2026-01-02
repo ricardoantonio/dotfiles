@@ -83,6 +83,7 @@ brew install --cask font-noto-sans
 brew install --cask font-source-serif-4
 
 # Install other tools
+brew install --cask alfred
 brew install --cask visual-studio-code
 brew install --cask yaak
 brew install --cask dbgate
