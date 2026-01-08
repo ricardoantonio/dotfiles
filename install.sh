@@ -4,6 +4,8 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
 NC='\033[0m' # No Color
 
 # Function to print section headers
@@ -21,10 +23,61 @@ print_error() {
   echo -e "${RED}✗ $1${NC}"
 }
 
-# Collect all required information upfront
+# Function to print info messages
+print_info() {
+  echo -e "${BLUE}ℹ $1${NC}"
+}
+
+# Function to print warning messages
+print_warning() {
+  echo -e "${PURPLE}⚠ $1${NC}"
+}
+
+# Function to check if a command exists
+command_exists() {
+  command -v "$1" &> /dev/null
+}
+
+# Function to validate email format
+validate_email() {
+  [[ "$1" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]
+}
+
+# Function to validate non-empty input
+validate_non_empty() {
+  [[ -n "$1" && "$1" != " " ]]
+}
+
+# Check if Homebrew is installed
+print_section "System Check"
+if ! command_exists brew; then
+  print_error "Homebrew is not installed"
+  echo "Please install Homebrew first:"
+  echo "/bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+  exit 1
+else
+  print_success "Homebrew is installed"
+fi
+
+# Collect all required information upfront with validation
 print_section "Configuration"
-read -p "Enter your Git name: " git_name
-read -p "Enter your Git email: " git_email
+while true; do
+  read -p "Enter your Git name: " git_name
+  if validate_non_empty "$git_name"; then
+    break
+  else
+    print_error "Git name cannot be empty"
+  fi
+done
+
+while true; do
+  read -p "Enter your Git email: " git_email
+  if validate_email "$git_email"; then
+    break
+  else
+    print_error "Please enter a valid email address"
+  fi
+done
 
 # Confirm inputs
 echo -e "\nConfirming your inputs:"
@@ -38,7 +91,11 @@ fi
 
 # Install and configure Git
 print_section "Installing Git"
-brew install git
+if command_exists git; then
+  print_info "Git is already installed"
+else
+  brew install git
+fi
 
 print_section "Configuring Git"
 git config --global user.name "$git_name"
@@ -47,69 +104,99 @@ git config --global init.defaultBranch main
 git config --global color.ui auto
 git config --global core.excludesfile ~/.config/git/.gitignore_global
 
+# Function to install package if not already installed
+install_if_missing() {
+  local package=$1
+  local type=${2:-"formula"}
+  local description=${3:-"$package"}
+  
+  if [[ $type == "cask" ]]; then
+    if brew list --cask "$package" &>/dev/null; then
+      print_info "$description (cask) is already installed"
+    else
+      print_info "Installing $description (cask)"
+      brew install --cask "$package"
+    fi
+  else
+    if brew list "$package" &>/dev/null; then
+      print_info "$description is already installed"
+    else
+      print_info "Installing $description"
+      brew install "$package"
+    fi
+  fi
+}
+
 # Install terminal tools
-brew install --cask ghostty
-brew install zsh-syntax-highlighting
-brew install zsh-autosuggestions
-brew install ripgrep
-brew install neovim
-brew install zstd
-brew install fastfetch
-brew install lazygit
-brew install starship
-brew install eza
-brew install git
-brew install fzf
-brew install tree
-brew install zoxide
-brew install fd
-brew install yazi
-brew install poppler
-brew install ffmpeg
-brew install resvg
-brew install imagemagick
-brew install ghostscript
-brew install sleek    # Sql formatter
-brew install watchman # react native watcher
+print_section "Installing Terminal Tools"
+install_if_missing ghostty cask "Ghostty - Modern terminal emulator"
+install_if_missing zsh-syntax-highlighting "" "ZSH Syntax Highlighting"
+install_if_missing zsh-autosuggestions "" "ZSH Autosuggestions"
+install_if_missing ripgrep "" "Ripgrep - Fast text search"
+install_if_missing neovim "" "Neovim - Modern text editor"
+install_if_missing zellij "" "Zellij - Terminal multiplexer"
+install_if_missing zstd "" "Zstd - Compression tool"
+install_if_missing fastfetch "" "Fastfetch - System information tool"
+install_if_missing lazygit "" "LazyGit - Simple terminal UI for Git"
+install_if_missing starship "" "Starship - Fast, customizable prompt"
+install_if_missing eza "" "Eza - Modern replacement for ls"
+install_if_missing fzf "" "Fzf - Command-line fuzzy finder"
+install_if_missing tree "" "Tree - Directory listing tool"
+install_if_missing zoxide "" "Zoxide - Smart directory navigator"
+install_if_missing fd "" "Fd - Simple, fast file finder"
+install_if_missing yazi "" "Yazi - Terminal file manager"
+install_if_missing poppler "" "Poppler - PDF rendering library"
+install_if_missing ffmpeg "" "FFmpeg - Video processing tool"
+install_if_missing resvg "" "Resvg - SVG rendering tool"
+install_if_missing imagemagick "" "ImageMagick - Image processing tool"
+install_if_missing ghostscript "" "Ghostscript - PostScript interpreter"
+install_if_missing sleek "" "Sleek - SQL formatter"
+install_if_missing watchman "" "Watchman - File watching service"
 
 # Install fonts
-brew install --cask font-jetbrains-mono
-brew install --cask font-jetbrains-mono-nerd-font
-brew install --cask font-cascadia-code
-brew install --cask font-inter
-brew install --cask font-roboto
-brew install --cask font-hack-nerd-font
-brew install --cask font-noto-sans
-brew install --cask font-source-serif-4
+print_section "Installing Fonts"
+install_if_missing font-jetbrains-mono cask "JetBrains Mono - Developer font"
+install_if_missing font-jetbrains-mono-nerd-font cask "JetBrains Mono Nerd Font - Developer font with icons"
+install_if_missing font-cascadia-code cask "Cascadia Code - Microsoft's coding font"
+install_if_missing font-inter cask "Inter - Modern font"
+install_if_missing font-roboto cask "Roboto - Google's font"
+install_if_missing font-hack-nerd-font cask "Hack Nerd Font - Monospaced font with icons"
+install_if_missing font-noto-sans cask "Noto Sans - Google's font"
+install_if_missing font-source-serif-4 cask "Source Serif 4 - Adobe's font"
 
 # Install other tools
-brew install --cask alfred
-brew install --cask visual-studio-code
-brew install --cask yaak
-brew install --cask dbgate
-brew install --cask firefox@developer-edition
-brew install --cask google-chrome
-brew install --cask obsidian
+print_section "Installing Applications"
+install_if_missing alfred cask "Alfred - Application launcher"
+install_if_missing visual-studio-code cask "Visual Studio Code - Code editor"
+install_if_missing yaak cask "Yaak - API client"
+install_if_missing dbgate cask "DbGate - Database client"
+install_if_missing firefox@developer-edition cask "Firefox Developer Edition - Web browser"
+install_if_missing google-chrome cask "Google Chrome - Web browser"
+install_if_missing obsidian cask "Obsidian - Note-taking app"
 
 # Install utilities
-brew install --cask tor-browser
+print_section "Installing Utilities"
+install_if_missing tor-browser cask "Tor Browser - Privacy-focused browser"
 
-# Install programing tools and languages
-brew install python
-brew install node@24
-brew install deno
-brew install go
-brew install --cask zulu@17 # JDK 17
+# Install programming tools and languages
+print_section "Installing Programming Tools"
+install_if_missing python "" "Python - Programming language"
+install_if_missing node@24 "" "Node.js v24 LTS - JavaScript runtime"
+install_if_missing deno "" "Deno - JavaScript/TypeScript runtime"
+install_if_missing go "" "Go - Programming language"
+install_if_missing zulu@17 cask "Zulu JDK 17 - Java Development Kit"
 
-# Instalation of PostgreSQL
-brew install postgresql@16
+# Installation of PostgreSQL
+print_section "Installing PostgreSQL"
+install_if_missing postgresql@16 "" "PostgreSQL v16 - Database system"
 sleep 2 # Give time for service registration
 
 # Try to start the service
+print_section "Starting PostgreSQL Service"
 if brew services start postgresql@16; then
   print_success "PostgreSQL service started"
 else
-  print_error "Failed to start PostgreSQL service"
+  print_warning "Failed to start PostgreSQL service"
   echo "Waiting a few more seconds and trying again..."
   sleep 3
   if brew services start postgresql@16; then
@@ -119,11 +206,31 @@ else
   fi
 fi
 
+# Backup existing .zshrc if it exists
+print_section "Configuring ZSH"
+if [ -f ~/.zshrc ]; then
+  print_info "Backing up existing .zshrc to .zshrc.backup"
+  cp ~/.zshrc ~/.zshrc.backup
+fi
+
 # Create Developer directories
 print_section "Creating Developer directories"
 mkdir -p ~/Developer/{projects,work,experiments,opensource}
+print_success "Developer directories created"
 
 # Load custom ZSH configuration
 print_section "Configuring ZSH"
-echo "# ---- My ZSH Custom Configuration ----" >>~/.zshrc
-echo "source ~/.config/zsh/config.zsh" >>~/.zshrc
+# Remove any existing configuration lines to avoid duplicates
+grep -v "source ~/.config/zsh/config.zsh" ~/.zshrc 2>/dev/null > ~/.zshrc.tmp || touch ~/.zshrc.tmp
+mv ~/.zshrc.tmp ~/.zshrc
+echo "# ---- My ZSH Custom Configuration ----" >> ~/.zshrc
+echo "source ~/.config/zsh/config.zsh" >> ~/.zshrc
+print_success "ZSH configuration completed"
+
+print_section "Installation Complete"
+echo -e "${GREEN}🎉 Installation completed successfully!${NC}"
+echo ""
+echo "Next steps:"
+echo "1. Restart your terminal or run: source ~/.zshrc"
+echo "2. Verify installation with: ./check-installation.sh"
+echo "3. Explore your new development environment!"

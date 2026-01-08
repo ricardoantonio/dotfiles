@@ -109,6 +109,10 @@ chmod +x check-installation.sh
 - JetBrains Mono Nerd Font
 - Cascadia Code
 - Hack Nerd Font
+- Inter
+- Roboto
+- Noto Sans
+- Source Serif 4
 
 ## ⚙️ Post-Installation
 
