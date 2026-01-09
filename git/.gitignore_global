@@ -67,6 +67,7 @@ tags
 # Dependencies
 node_modules/
 .pnpm-store/
+configstore/
 
 # Logs and databases
 *.log
