@@ -35,7 +35,7 @@ print_warning() {
 
 # Function to check if a command exists
 command_exists() {
-  command -v "$1" &> /dev/null
+  command -v "$1" &>/dev/null
 }
 
 # Function to validate email format
@@ -90,12 +90,7 @@ if [[ $confirm != "y" && $confirm != "Y" ]]; then
 fi
 
 # Install and configure Git
-print_section "Installing Git"
-if command_exists git; then
-  print_info "Git is already installed"
-else
-  brew install git
-fi
+brew install git
 
 print_section "Configuring Git"
 git config --global user.name "$git_name"
@@ -109,7 +104,7 @@ install_if_missing() {
   local package=$1
   local type=${2:-"formula"}
   local description=${3:-"$package"}
-  
+
   if [[ $type == "cask" ]]; then
     if brew list --cask "$package" &>/dev/null; then
       print_info "$description (cask) is already installed"
@@ -151,7 +146,6 @@ install_if_missing resvg "" "Resvg - SVG rendering tool"
 install_if_missing imagemagick "" "ImageMagick - Image processing tool"
 install_if_missing ghostscript "" "Ghostscript - PostScript interpreter"
 install_if_missing sleek "" "Sleek - SQL formatter"
-install_if_missing watchman "" "Watchman - File watching service"
 
 # Install fonts
 print_section "Installing Fonts"
@@ -173,6 +167,7 @@ install_if_missing dbgate cask "DbGate - Database client"
 install_if_missing firefox@developer-edition cask "Firefox Developer Edition - Web browser"
 install_if_missing google-chrome cask "Google Chrome - Web browser"
 install_if_missing obsidian cask "Obsidian - Note-taking app"
+install_if_missing bitwarden "" "Bitwarden - Password manager"
 
 # Install utilities
 print_section "Installing Utilities"
@@ -182,9 +177,7 @@ install_if_missing tor-browser cask "Tor Browser - Privacy-focused browser"
 print_section "Installing Programming Tools"
 install_if_missing python "" "Python - Programming language"
 install_if_missing node@24 "" "Node.js v24 LTS - JavaScript runtime"
-install_if_missing deno "" "Deno - JavaScript/TypeScript runtime"
 install_if_missing go "" "Go - Programming language"
-install_if_missing zulu@17 cask "Zulu JDK 17 - Java Development Kit"
 
 # Installation of PostgreSQL
 print_section "Installing PostgreSQL"
@@ -206,6 +199,13 @@ else
   fi
 fi
 
+### Install windowtiling
+print_section "Installing Tiling Window Manager"
+brew tap FelixKratz/formulae
+install_if_missing sketchybar "" "Sketchybar - macOS status bar replacement"
+chmod +x ~/.config/sketchybar/plugins/*.sh
+install_if_missing nikitabobko/tap/aerospace "cask" "AeroSpace - tiling window manager for macOS"
+
 # Backup existing .zshrc if it exists
 print_section "Configuring ZSH"
 if [ -f ~/.zshrc ]; then
@@ -221,10 +221,10 @@ print_success "Developer directories created"
 # Load custom ZSH configuration
 print_section "Configuring ZSH"
 # Remove any existing configuration lines to avoid duplicates
-grep -v "source ~/.config/zsh/config.zsh" ~/.zshrc 2>/dev/null > ~/.zshrc.tmp || touch ~/.zshrc.tmp
+grep -v "source ~/.config/zsh/config.zsh" ~/.zshrc 2>/dev/null >~/.zshrc.tmp || touch ~/.zshrc.tmp
 mv ~/.zshrc.tmp ~/.zshrc
-echo "# ---- My ZSH Custom Configuration ----" >> ~/.zshrc
-echo "source ~/.config/zsh/config.zsh" >> ~/.zshrc
+echo "# ---- My ZSH Custom Configuration ----" >>~/.zshrc
+echo "source ~/.config/zsh/config.zsh" >>~/.zshrc
 print_success "ZSH configuration completed"
 
 print_section "Installation Complete"
