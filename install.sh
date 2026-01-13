@@ -163,9 +163,9 @@ install_if_missing alfred cask "Alfred - Application launcher"
 install_if_missing visual-studio-code cask "Visual Studio Code - Code editor"
 install_if_missing yaak cask "Yaak - API client"
 install_if_missing dbgate cask "DbGate - Database client"
+install_if_missing firefox cask "Firefox - Web browser"
 install_if_missing firefox@developer-edition cask "Firefox Developer Edition - Web browser"
 install_if_missing google-chrome cask "Google Chrome - Web browser"
-install_if_missing obsidian cask "Obsidian - Note-taking app"
 install_if_missing bitwarden "" "Bitwarden - Password manager"
 
 # Install utilities
