@@ -204,6 +204,10 @@ brew tap FelixKratz/formulae
 install_if_missing sketchybar "" "Sketchybar - macOS status bar replacement"
 chmod +x ~/.config/sketchybar/plugins/*.sh
 install_if_missing nikitabobko/tap/aerospace "cask" "AeroSpace - tiling window manager for macOS"
+brew tap FelixKratz/formulae
+install_if_missing borders "" "JankyBorders - Highlighting the focused window"
+#### Move windows by dragging any part of the window
+defaults write -g NSWindowShouldDragOnGesture -bool true
 
 # Backup existing .zshrc if it exists
 print_section "Configuring ZSH"

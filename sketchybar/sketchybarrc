@@ -82,8 +82,10 @@ sketchybar --add item clock right \
            --subscribe battery system_woke power_source_change \
            --add event input_change 'AppleSelectedInputSourcesChangedNotification' \
            --add item keyboard right \
-           --set keyboard script="$PLUGIN_DIR/keyboard.sh" width=44 \
-           --subscribe keyboard input_change 
+           --set keyboard script="$PLUGIN_DIR/keyboard.sh" \
+           --add item weather right \
+           --set weather update_freq=1800 \
+           --set weather script="$PLUGIN_DIR/weather.sh" \
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
