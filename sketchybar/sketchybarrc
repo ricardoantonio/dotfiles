@@ -86,6 +86,10 @@ sketchybar --add item clock right \
            --add item weather right \
            --set weather update_freq=1800 \
            --set weather script="$PLUGIN_DIR/weather.sh" \
-
+           --add item media right \
+           --set media \
+                 update_freq=2 \
+                 script="$PLUGIN_DIR/media.sh" \
+                 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
