@@ -7,4 +7,4 @@ case ${SOURCE} in
 'com.apple.keylayout.LatinAmerican') LABEL='LA' ;;
 esac
 
-sketchybar --set $NAME label="$LABEL" icon=
+sketchybar --set $NAME label="$LABEL" icon=􀇳

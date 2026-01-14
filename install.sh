@@ -156,6 +156,7 @@ install_if_missing font-roboto cask "Roboto - Google's font"
 install_if_missing font-hack-nerd-font cask "Hack Nerd Font - Monospaced font with icons"
 install_if_missing font-noto-sans cask "Noto Sans - Google's font"
 install_if_missing font-source-serif-4 cask "Source Serif 4 - Adobe's font"
+install_if_missing sf-symbols cask "SF Symbols - symbols from apple"
 
 # Install other tools
 print_section "Installing Applications"

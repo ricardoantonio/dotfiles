@@ -16,7 +16,7 @@ if [ "$STATE" = "playing" ]; then
   fi
 
   sketchybar --set "$NAME" \
-    icon="󰎆 " \
+    icon=􃁯 \
     label="$DISPLAY" \
     drawing=on
 
