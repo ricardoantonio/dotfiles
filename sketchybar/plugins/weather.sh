@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+
+set -a
+source "$HOME/.config/.env"
+set +a
+
 # WTTR_LOCATION="LAT,LON"
 LAT="${WTTR_LOCATION%,*}"
 LON="${WTTR_LOCATION#*,}"
