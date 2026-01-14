@@ -86,6 +86,7 @@ sketchybar --add item clock right \
            --add event input_change 'AppleSelectedInputSourcesChangedNotification' \
            --add item keyboard right \
            --set keyboard script="$PLUGIN_DIR/keyboard.sh" \
+           --subscribe keyboard input_change \
            --add item weather right \
            --set weather update_freq=1800 \
            --set weather script="$PLUGIN_DIR/weather.sh" \
