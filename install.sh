@@ -59,46 +59,6 @@ else
   print_success "Homebrew is installed"
 fi
 
-# Collect all required information upfront with validation
-print_section "Configuration"
-while true; do
-  read -p "Enter your Git name: " git_name
-  if validate_non_empty "$git_name"; then
-    break
-  else
-    print_error "Git name cannot be empty"
-  fi
-done
-
-while true; do
-  read -p "Enter your Git email: " git_email
-  if validate_email "$git_email"; then
-    break
-  else
-    print_error "Please enter a valid email address"
-  fi
-done
-
-# Confirm inputs
-echo -e "\nConfirming your inputs:"
-echo "Git name: $git_name"
-echo "Git email: $git_email"
-read -p "Is this correct? (y/N) " confirm
-if [[ $confirm != "y" && $confirm != "Y" ]]; then
-  print_error "Installation cancelled"
-  exit 1
-fi
-
-# Install and configure Git
-brew install git
-
-print_section "Configuring Git"
-git config --global user.name "$git_name"
-git config --global user.email "$git_email"
-git config --global init.defaultBranch main
-git config --global color.ui auto
-git config --global core.excludesfile ~/.config/git/.gitignore_global
-
 # Function to install package if not already installed
 install_if_missing() {
   local package=$1
@@ -121,6 +81,59 @@ install_if_missing() {
     fi
   fi
 }
+
+# Collect all required information upfront with validation
+print_section "Configuration"
+
+# Attempt to get existing Git values
+git_name=$(git config --global user.name)
+git_email=$(git config --global user.email)
+
+# Ask for Git name only if it is not configured
+if [[ -z "$git_name" ]]; then
+  while true; do
+    read -p "Enter your Git name: " git_name
+    if validate_non_empty "$git_name"; then
+      break
+    else
+      print_error "Git name cannot be empty"
+    fi
+  done
+fi
+
+# Ask for Git email only if it is not configured
+if [[ -z "$git_email" ]]; then
+  while true; do
+    read -p "Enter your Git email: " git_email
+    if validate_email "$git_email"; then
+      break
+    else
+      print_error "Please enter a valid email address"
+    fi
+  done
+fi
+
+# Confirm only if one of the values was empty
+if [[ -z "$(git config --global user.name)" || -z "$(git config --global user.email)" ]]; then
+  echo -e "\nConfirming your inputs:"
+  echo "Git name: $git_name"
+  echo "Git email: $git_email"
+  read -p "Is this correct? (y/N) " confirm
+  if [[ $confirm != "y" && $confirm != "Y" ]]; then
+    print_error "Installation cancelled"
+    exit 1
+  fi
+fi
+
+# Install and configure Git
+install_if_missing install git
+
+print_section "Configuring Git"
+git config --global user.name "$git_name"
+git config --global user.email "$git_email"
+git config --global init.defaultBranch main
+git config --global color.ui auto
+git config --global core.excludesfile ~/.config/git/.gitignore_global
 
 # Install terminal tools
 print_section "Installing Terminal Tools"
@@ -161,6 +174,7 @@ install_if_missing sf-symbols cask "SF Symbols - symbols from apple"
 # Install other tools
 print_section "Installing Applications"
 install_if_missing alfred cask "Alfred - Application launcher"
+install_if_missing obsidian cask "Obsidian - Note taken app"
 install_if_missing visual-studio-code cask "Visual Studio Code - Code editor"
 install_if_missing yaak cask "Yaak - API client"
 install_if_missing dbgate cask "DbGate - Database client"
@@ -178,6 +192,7 @@ print_section "Installing Programming Tools"
 install_if_missing python "" "Python - Programming language"
 install_if_missing node@24 "" "Node.js v24 LTS - JavaScript runtime"
 install_if_missing go "" "Go - Programming language"
+install_if_missing deno "" "Deno JavaScript runtime"
 
 # Installation of PostgreSQL
 print_section "Installing PostgreSQL"
