@@ -191,7 +191,6 @@ print_section "Installing Programming Tools"
 install_if_missing python "" "Python - Programming language"
 install_if_missing node@24 "" "Node.js v24 LTS - JavaScript runtime"
 install_if_missing go "" "Go - Programming language"
-install_if_missing deno "" "Deno JavaScript runtime"
 
 # Installation of PostgreSQL
 print_section "Installing PostgreSQL"
