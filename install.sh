@@ -126,7 +126,7 @@ if [[ -z "$(git config --global user.name)" || -z "$(git config --global user.em
 fi
 
 # Install and configure Git
-install_if_missing install git
+install_if_missing git "" "Git - Version control system "
 
 print_section "Configuring Git"
 git config --global user.name "$git_name"
