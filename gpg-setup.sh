@@ -4,17 +4,7 @@ set -e
 # 🔹 Prompt user for GPG and Git configuration
 echo "🔹 Setting up a new GPG key"
 
-read -p "Full name: " NAME
 read -p "Email for Git/GPG: " EMAIL
-read -p "Key comment (optional): " COMMENT
-read -p "Key expiration (e.g., 1y, 6m, 0 for never): " EXPIRE_DATE
-
-# Set defaults if user leaves input blank
-EXPIRE_DATE=${EXPIRE_DATE:-1y}
-COMMENT=${COMMENT:-git signing key}
-
-KEY_TYPE="RSA"
-KEY_LENGTH=4096
 
 # 🔹 Check if pinentry-mac is installed (required for passphrase input)
 echo "🔹 Checking for pinentry-mac..."
@@ -34,18 +24,7 @@ if [ -n "$EXISTING_KEY_ID" ]; then
 else
   # 🔹 Generate a new GPG key
   echo "🔹 Generating a new GPG key..."
-  gpg --batch --full-generate-key <<EOF
-%echo Generating a GPG key
-Key-Type: $KEY_TYPE
-Key-Length: $KEY_LENGTH
-Name-Real: $NAME
-Name-Comment: $COMMENT
-Name-Email: $EMAIL
-Expire-Date: $EXPIRE_DATE
-Passphrase: 
-%commit
-%echo Done
-EOF
+  gpg --full-generate-key
 
   KEY_ID=$(gpg --list-secret-keys --keyid-format=long "$EMAIL" | grep "sec" | awk '{print $2}' | cut -d'/' -f2)
   echo "🔹 New Key ID: $KEY_ID"
@@ -58,7 +37,6 @@ echo "Upload this public key to GitHub and Forgejo."
 
 # 🔹 Configure Git globally
 echo "🔹 Configuring Git..."
-git config --global user.name "$NAME"
 git config --global user.email "$EMAIL"
 git config --global user.signingkey "$KEY_ID"
 git config --global commit.gpgsign true
