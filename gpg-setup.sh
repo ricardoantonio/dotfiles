@@ -5,7 +5,7 @@ set -e
 # GPG setup script (macOS only)
 # - Generates or reuses a GPG key for an email
 # - Configures gpg-agent with pinentry-mac
-# - Does NOT touch Git configuration
+# - Configures Git to use the GPG key
 # ============================================
 
 echo "🔐 GPG setup (macOS)"
@@ -100,6 +100,16 @@ pinentry-program $PINENTRY_PATH
 EOF
 
 killall gpg-agent &>/dev/null || true
+
+# ----------------------------
+# Configure Git for GPG signing
+# ----------------------------
+echo "🔹 Configuring Git to use GPG..."
+
+git config --global user.email "$EMAIL"
+git config --global user.signingkey "$KEY_ID"
+git config --global commit.gpgsign true
+git config --global tag.gpgSign true
 
 # ----------------------------
 # Final manual step (copy & paste)
