@@ -1,63 +1,126 @@
 #!/usr/bin/env bash
 set -e
 
-# 🔹 Prompt user for GPG and Git configuration
-echo "🔹 Setting up a new GPG key"
+# ============================================
+# GPG setup script (macOS only)
+# - Generates or reuses a GPG key for an email
+# - Configures gpg-agent with pinentry-mac
+# - Does NOT touch Git configuration
+# ============================================
 
-read -p "Email for Git/GPG: " EMAIL
+echo "🔐 GPG setup (macOS)"
+echo
 
-# 🔹 Check if pinentry-mac is installed (required for passphrase input)
+# ----------------------------
+# Ask for email
+# ----------------------------
+read -p "Email for GPG key: " EMAIL
+
+if [[ -z "$EMAIL" ]]; then
+  echo "❌ Email cannot be empty"
+  exit 1
+fi
+
+# ----------------------------
+# Ensure pinentry-mac is installed
+# ----------------------------
 echo "🔹 Checking for pinentry-mac..."
+
 if ! command -v pinentry-mac &>/dev/null; then
-  echo "pinentry-mac not found, installing with brew..."
+  echo "pinentry-mac not found, installing via Homebrew..."
   brew install pinentry-mac
 else
   echo "pinentry-mac is already installed ✅"
 fi
 
-# 🔹 Check if a GPG key already exists for this email
-EXISTING_KEY_ID=$(gpg --list-secret-keys --keyid-format=long "$EMAIL" 2>/dev/null | grep "sec" | awk '{print $2}' | cut -d'/' -f2 || true)
+PINENTRY_PATH="$(command -v pinentry-mac)"
+if [[ -z "$PINENTRY_PATH" ]]; then
+  echo "❌ pinentry-mac not found after installation"
+  exit 1
+fi
 
-if [ -n "$EXISTING_KEY_ID" ]; then
-  echo "🔹 A GPG key already exists for $EMAIL: $EXISTING_KEY_ID"
-  KEY_ID="$EXISTING_KEY_ID"
+# ----------------------------
+# Check for existing GPG key
+# ----------------------------
+echo "🔹 Checking for existing GPG key..."
+
+KEY_ID=$(gpg --list-secret-keys --keyid-format=long "$EMAIL" 2>/dev/null |
+  awk '/^sec/{print $2}' | cut -d'/' -f2)
+
+if [[ -n "$KEY_ID" ]]; then
+  echo "✅ Existing GPG key found: $KEY_ID"
 else
-  # 🔹 Generate a new GPG key
-  echo "🔹 Generating a new GPG key..."
+  echo "🔹 No GPG key found for $EMAIL"
+  echo "🔹 Launching interactive GPG key generation..."
+  echo
+
   gpg --full-generate-key
 
-  KEY_ID=$(gpg --list-secret-keys --keyid-format=long "$EMAIL" | grep "sec" | awk '{print $2}' | cut -d'/' -f2)
-  echo "🔹 New Key ID: $KEY_ID"
+  KEY_ID=$(gpg --list-secret-keys --keyid-format=long "$EMAIL" |
+    awk '/^sec/{print $2}' | cut -d'/' -f2)
+
+  if [[ -z "$KEY_ID" ]]; then
+    echo "❌ No GPG key found for $EMAIL after generation"
+    exit 1
+  fi
+
+  echo "✅ New GPG key created: $KEY_ID"
 fi
 
-# 🔹 Export the public key only (safe to share)
-echo "🔹 Exporting public key to ~/gpg-public-key.asc..."
-gpg --armor --export "$KEY_ID" >~/gpg-public-key.asc
-echo "Upload this public key to GitHub and Forgejo."
+# ----------------------------
+# Export public key
+# ----------------------------
+PUBKEY_FILE="$HOME/gpg-public-key.asc"
 
-# 🔹 Configure Git globally
-echo "🔹 Configuring Git..."
-git config --global user.email "$EMAIL"
-git config --global user.signingkey "$KEY_ID"
-git config --global commit.gpgsign true
-git config --global tag.gpgSign true
+echo "🔹 Exporting public key to:"
+echo "   $PUBKEY_FILE"
 
-# 🔹 Set GPG_TTY in shell config if not already present
-echo "🔹 Configuring GPG_TTY..."
-if ! grep -q "export GPG_TTY=" ~/.zshrc 2>/dev/null; then
-  echo 'export GPG_TTY=$(tty)' >>~/.zshrc
+gpg --armor --export "$KEY_ID" >"$PUBKEY_FILE"
+
+# ----------------------------
+# Configure gpg-agent
+# ----------------------------
+echo "🔹 Configuring gpg-agent..."
+
+GNUPG_DIR="$HOME/.gnupg"
+AGENT_CONF="$GNUPG_DIR/gpg-agent.conf"
+
+mkdir -p "$GNUPG_DIR"
+
+# Backup existing config if present
+if [[ -f "$AGENT_CONF" ]]; then
+  cp "$AGENT_CONF" "$AGENT_CONF.bak"
+  echo "📦 Existing gpg-agent.conf backed up"
 fi
-source ~/.zshrc
 
-# 🔹 Configure GPG agent
-echo "🔹 Configuring GPG agent..."
-mkdir -p ~/.gnupg
-grep -qxF "default-cache-ttl 28800" ~/.gnupg/gpg-agent.conf 2>/dev/null || echo "default-cache-ttl 28800" >>~/.gnupg/gpg-agent.conf
-grep -qxF "max-cache-ttl 86400" ~/.gnupg/gpg-agent.conf 2>/dev/null || echo "max-cache-ttl 86400" >>~/.gnupg/gpg-agent.conf
-grep -qxF "pinentry-program $(which pinentry-mac)" ~/.gnupg/gpg-agent.conf 2>/dev/null || echo "pinentry-program $(which pinentry-mac)" >>~/.gnupg/gpg-agent.conf
-killall gpg-agent || true
+cat >"$AGENT_CONF" <<EOF
+default-cache-ttl 28800
+max-cache-ttl 86400
+pinentry-program $PINENTRY_PATH
+EOF
 
-# 🔹 Final instructions
-echo "✅ Script completed. You can test a signed commit with:"
-echo "git commit -m \"test: signed commit\""
-echo "and verify it with 'git log --show-signature'"
+killall gpg-agent &>/dev/null || true
+
+# ----------------------------
+# Final manual step (copy & paste)
+# ----------------------------
+echo
+echo "────────────────────────────────────────────"
+echo "ℹ️  Final manual step (copy & paste):"
+echo
+echo "echo 'export GPG_TTY=\$(tty)' >> ~/.zshrc"
+echo "source ~/.zshrc"
+echo
+echo "Then restart your terminal if needed."
+echo "────────────────────────────────────────────"
+
+echo
+echo "✅ GPG setup completed"
+echo "Key ID: $KEY_ID"
+echo
+echo "Copy your public GPG key to the clipboard (macOS)"
+echo "pbcopy < ~/gpg-public-key.asc"
+echo
+echo "➡️ Upload the public key to:"
+echo "   - GitHub:  Settings → SSH and GPG keys"
+echo "   - Forgejo: Settings → SSH / GPG keys"
