@@ -22,10 +22,11 @@ This repository contains my personal dotfiles that configure a modern developmen
 ├── htop/             # Htop system monitor configuration
 ├── nvim/             # Neovim configuration (LazyVim)
 ├── starship/         # Starship prompt configuration
-├── zellij/           # Zellij terminal multiplexer configuration
 ├── zsh/              # ZSH shell configuration
+│   └── config.zsh    # Custom ZSH configuration
 ├── install.sh        # Installation script
-└── check-installation.sh  # Verification script
+├── check-installation.sh  # Verification script
+└── gpg-setup.sh      # GPG key setup script
 ```
 
 ## 🛠 Prerequisites
@@ -63,6 +64,7 @@ The installation script will:
 5. Configure PostgreSQL database
 6. Create development directories
 7. Set up ZSH with custom configuration
+8. Enable macOS window dragging gestures
 
 ### Verify Installation
 
@@ -74,68 +76,120 @@ chmod +x check-installation.sh
 ## 📦 What Gets Installed
 
 ### Terminal & Shell
-- Ghostty - Modern terminal emulator
-- ZSH - Enhanced shell with syntax highlighting and autosuggestions
-- Starship - Fast, customizable prompt
-- Zellij - Terminal multiplexer
+- **Ghostty** - Modern terminal emulator
+- **ZSH Syntax Highlighting** - Syntax highlighting for ZSH commands
+- **ZSH Autosuggestions** - Command suggestions based on history
+- **Starship** - Fast, customizable prompt
+- **Fastfetch** - System information tool
 
 ### Development Tools
-- Neovim - Modern text editor
-- LazyGit - Simple terminal UI for Git
-- Ripgrep - Fast text search
-- Fd - Simple, fast file finder
-- Fzf - Command-line fuzzy finder
-- Zoxide - Smart directory navigator
-- Eza - Modern replacement for ls
+- **Neovim** - Modern text editor
+- **LazyGit** - Simple terminal UI for Git
+- **Ripgrep** - Fast text search
+- **Fd** - Simple, fast file finder
+- **Fzf** - Command-line fuzzy finder
+- **Zoxide** - Smart directory navigator
+- **Eza** - Modern replacement for ls
+- **Tree** - Directory listing tool
+- **Yazi** - Terminal file manager
+- **Sleek** - SQL formatter
+
+### Media & Processing Tools
+- **Poppler** - PDF rendering library
+- **FFmpeg** - Video processing tool
+- **Resvg** - SVG rendering tool
+- **ImageMagick** - Image processing tool
+- **Ghostscript** - PostScript interpreter
 
 ### Programming Languages
-- Python
-- Node.js (v24 LTS)
-- Deno
-- Go
-- Java (JDK 17)
+- **Python** - Python programming language
+- **Node.js** - JavaScript runtime
+- **Go** - Go programming language
+
+### Database
+- **PostgreSQL 16** - Advanced open source database
 
 ### Applications
-- Visual Studio Code
-- Alfred - Application launcher
-- Firefox Developer Edition
-- Google Chrome
-- Obsidian - Note-taking app
-- Yaak - API client
-- DbGate - Database client
+- **Alfred** - Application launcher
+- **Obsidian** - Note-taking app
+- **Zed** - Minimal code editor
+- **Yaak** - API client
+- **DbGate** - Database client
+- **Firefox** - Web browser
+- **Google Chrome** - Web browser
+- **Tor Browser** - Privacy-focused browser
+
+### Security
+- **Bitwarden** - Password manager
 
 ### Fonts
-- JetBrains Mono
-- JetBrains Mono Nerd Font
-- Cascadia Code
-- Hack Nerd Font
-- Inter
-- Roboto
-- Noto Sans
-- Source Serif 4
+- **JetBrains Mono** - Developer font
+- **JetBrains Mono Nerd Font** - Developer font with icons
+- **Inter** - Modern font
+- **Roboto** - Google's font
+- **Source Serif 4** - Adobe's font
+
+### System Utilities
+- **Zstd** - Compression tool
 
 ## ⚙️ Post-Installation
 
 After installation, your shell will be configured with:
 
-- Catppuccin Mocha theme across all tools
-- Custom aliases for faster navigation
-- Enhanced Git configuration
+- Starship prompt with custom configuration
+- Enhanced history management with search capabilities
 - Modern CLI tools replacing system defaults
-- PostgreSQL database service running
+- PostgreSQL 16 database service running
+- macOS window dragging enabled (drag windows from anywhere)
 
 ### Useful Aliases
 
+**Navigation:**
 ```bash
 dev    # cd ~/Developer
 work   # cd ~/Developer/work
 proj   # cd ~/Developer/projects
 exp    # cd ~/Developer/experiments
+oss    # cd ~/Developer/opensource
+```
+
+**Tools:**
+```bash
 v      # Open Neovim
 reload # Reload ZSH configuration
+```
+
+**File Listing:**
+```bash
 ls     # eza with icons
 ll     # eza long format with icons
+la     # eza long format with icons (including hidden files)
 ```
+
+**Development:**
+```bash
+cr     # cargo run (for Rust projects)
+```
+
+**File Manager:**
+```bash
+y      # Open Yazi file manager with smart directory switching
+```
+
+## 🔐 GPG Setup (Optional)
+
+To configure GPG for signing commits:
+
+```bash
+chmod +x gpg-setup.sh
+./gpg-setup.sh
+```
+
+This script will:
+- Generate or reuse a GPG key for your email
+- Configure gpg-agent with pinentry-mac
+- Configure Git to use the GPG key for signing commits and tags
+- Export your public key for upload to GitHub/Forgejo
 
 ## 🔄 Updates
 
@@ -167,6 +221,24 @@ brew services start postgresql@16
 ### If fonts aren't displaying correctly
 Log out and back in to macOS, or restart your terminal applications.
 
+### If plugins show "not found" errors
+Make sure you've installed the required packages:
+```bash
+brew install zsh-syntax-highlighting zsh-autosuggestions fzf zoxide starship
+```
+
+## 📂 Development Directories
+
+The installation creates the following directory structure:
+
+```
+~/Developer/
+├── projects/      # Personal projects
+├── work/          # Work-related projects
+├── experiments/   # Experimental code
+└── opensource/    # Open source contributions
+```
+
 ## 🗑 Uninstallation
 
 To remove Homebrew packages (be careful!):
@@ -182,6 +254,7 @@ Manual cleanup:
 - Remove custom lines from `~/.zshrc`
 - Delete `~/.config` directory
 - Remove `~/Developer` directories if no longer needed
+- Reset macOS window dragging: `defaults delete -g NSWindowShouldDragOnGesture`
 
 ## 📄 License
 
