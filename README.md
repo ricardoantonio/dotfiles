@@ -142,39 +142,38 @@ After installation, your shell will be configured with:
 - PostgreSQL 16 database service running
 - macOS window dragging enabled (drag windows from anywhere)
 
-### Useful Aliases
+### Shell Features
 
-**Navigation:**
+The ZSH configuration includes:
+- **50+ aliases** for Git, navigation, development tools, and utilities
+- **10+ functions** for productivity (mkcd, extract, backup, serve, etc.)
+- **Smart completion** with caching and case-insensitive matching
+- **Enhanced history** with 50k commands and cross-session sharing
+- **Modern key bindings** for efficient navigation
+
+**Quick Examples:**
 ```bash
-dev    # cd ~/Developer
-work   # cd ~/Developer/work
-proj   # cd ~/Developer/projects
-exp    # cd ~/Developer/experiments
-oss    # cd ~/Developer/opensource
+# Navigation
+dev          # cd ~/Developer
+..           # cd .. (up to 5 levels with ...)
+
+# File operations
+ls           # eza with icons
+y            # yazi file manager (changes dir on exit)
+
+# Git shortcuts
+gs           # git status
+gcm "msg"    # git commit -m "msg"
+lg           # lazygit
+
+# Utilities
+mkcd newdir  # mkdir + cd
+extract file.tar.gz  # auto-detect format
+backup file.txt      # timestamped backup
+serve 8080   # quick HTTP server
 ```
 
-**Tools:**
-```bash
-v      # Open Neovim
-reload # Reload ZSH configuration
-```
-
-**File Listing:**
-```bash
-ls     # eza with icons
-ll     # eza long format with icons
-la     # eza long format with icons (including hidden files)
-```
-
-**Development:**
-```bash
-cr     # cargo run (for Rust projects)
-```
-
-**File Manager:**
-```bash
-y      # Open Yazi file manager with smart directory switching
-```
+**📖 Full documentation:** See [ZSH_GUIDE.md](ZSH_GUIDE.md) for complete list of aliases, functions, and usage examples.
 
 ## 🔐 GPG Setup (Optional)
 
