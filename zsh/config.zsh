@@ -12,9 +12,6 @@ if command -v go &> /dev/null; then
   export PATH=$PATH:$(go env GOPATH)/bin
 fi
 
-# Node.js v24 LTS
-export PATH=/opt/homebrew/opt/node@24/bin:$PATH
-
 # PostgreSQL
 export PATH=/opt/homebrew/opt/postgresql@16/bin:$PATH
 

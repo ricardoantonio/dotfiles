@@ -165,19 +165,16 @@ install_if_missing font-jetbrains-mono cask "JetBrains Mono - Developer font"
 install_if_missing font-jetbrains-mono-nerd-font cask "JetBrains Mono Nerd Font - Developer font with icons"
 install_if_missing font-inter cask "Inter - Modern font"
 install_if_missing font-roboto cask "Roboto - Google's font"
-install_if_missing font-hack-nerd-font cask "Hack Nerd Font - Monospaced font with icons"
-install_if_missing font-noto-sans cask "Noto Sans - Google's font"
 install_if_missing font-source-serif-4 cask "Source Serif 4 - Adobe's font"
 
 # Install other tools
 print_section "Installing Applications"
 install_if_missing alfred cask "Alfred - Application launcher"
 install_if_missing obsidian cask "Obsidian - Note taken app"
-install_if_missing visual-studio-code cask "Visual Studio Code - Code editor"
+install_if_missing zed cask "Zed - minimal code editor"
 install_if_missing yaak cask "Yaak - API client"
 install_if_missing dbgate cask "DbGate - Database client"
 install_if_missing firefox cask "Firefox - Web browser"
-install_if_missing firefox@developer-edition cask "Firefox Developer Edition - Web browser"
 install_if_missing google-chrome cask "Google Chrome - Web browser"
 install_if_missing bitwarden "" "Bitwarden - Password manager"
 
@@ -188,7 +185,7 @@ install_if_missing tor-browser cask "Tor Browser - Privacy-focused browser"
 # Install programming tools and languages
 print_section "Installing Programming Tools"
 install_if_missing python "" "Python - Programming language"
-install_if_missing node@24 "" "Node.js v24 LTS - JavaScript runtime"
+install_if_missing node "" "Node.js - JavaScript runtime"
 install_if_missing go "" "Go - Programming language"
 
 # Installation of PostgreSQL
