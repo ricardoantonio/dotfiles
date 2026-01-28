@@ -134,6 +134,7 @@ git config --global user.email "$git_email"
 git config --global init.defaultBranch main
 git config --global color.ui auto
 git config --global core.excludesfile ~/.config/git/.gitignore_global
+git config --global url."git@git.rasoftwarelabs.com:".insteadOf "https://git.rasoftwarelabs.com"
 
 # Install terminal tools
 print_section "Installing Terminal Tools"

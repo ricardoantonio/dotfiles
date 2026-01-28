@@ -61,6 +61,7 @@ export LESSCHARSET='UTF-8'
 if command -v go &> /dev/null; then
   export GOPATH=$(go env GOPATH)
   export PATH=$PATH:$GOPATH/bin
+  export GOPRIVATE=git.rasoftwarelabs.com*
 fi
 
 # PostgreSQL
