@@ -1,16 +1,12 @@
-# macOS
-# General
+# =====================================
+# OS - macOS
+# =====================================
+
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# Icon must end with two \r
 Icon
-
-# Thumbnails
 ._*
-
-# Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
 .Spotlight-V100
@@ -18,31 +14,44 @@ Icon
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-
-# iCloud generated files
 *.icloud
 
-# VSCode
+# =====================================
+# OS - Windows
+# =====================================
+
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# =====================================
+# Editors - VSCode
+# =====================================
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# JetBrains IDEs
+# =====================================
+# Editors - JetBrains
+# =====================================
+
 .idea/
 *.iml
 *.ipr
 *.iws
 
-# Vim/Neovim
+# =====================================
+# Editors - Vim / Neovim
+# =====================================
+
 [._]*.s[a-v][a-z]
 !*.svg
 [._]*.sw[a-p]
@@ -56,39 +65,13 @@ Sessionx.vim
 tags
 [._]*.un~
 
-# Environment and secrets
-.env
-.env.*
-.envrc
-.direnv
-*.pem
-*.key
+# =====================================
+# Generic temporary / backup files
+# =====================================
 
-# Dependencies
-node_modules/
-.pnpm-store/
-configstore/
-
-# Logs and databases
-*.log
-npm-debug.log*
-yarn-debug.log*
-*.sqlite
-*.sqlite3
-*.db
-
-# Build and cache
-dist/
-build/
-out/
-.cache/
-.npm
-**pycache**/
-*.py[cod]
-
-# Backup files
 *.bak
-*.gho
 *.ori
 *.orig
 *.tmp
+*.swp
+
