@@ -154,7 +154,6 @@ check_command "psql" && ((passed++)) || ((failed++))
 print_section "Checking Applications"
 check_cask "alfred" && ((passed++)) || ((failed++))
 check_cask "obsidian" && ((passed++)) || ((failed++))
-check_cask "zed" && ((passed++)) || ((failed++))
 check_cask "yaak" && ((passed++)) || ((failed++))
 check_cask "dbgate" && ((passed++)) || ((failed++))
 check_cask "firefox" && ((passed++)) || ((failed++))
