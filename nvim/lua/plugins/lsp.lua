@@ -8,6 +8,7 @@ return {
       emmet_ls = {
         filetypes = { "html", "css", "gotmpl" },
       },
+      cssls = {},
     },
   },
 }
