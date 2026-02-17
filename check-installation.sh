@@ -147,6 +147,7 @@ print_section "Checking Programming Languages"
 check_command "python3" && ((passed++)) || ((failed++))
 check_command "node" && ((passed++)) || ((failed++))
 check_command "go" && ((passed++)) || ((failed++))
+check_command "deno" && ((passed++)) || ((failed++))
 
 print_section "Checking Database"
 check_command "psql" && ((passed++)) || ((failed++))
@@ -155,6 +156,8 @@ print_section "Checking Applications"
 check_cask "alfred" && ((passed++)) || ((failed++))
 check_cask "obsidian" && ((passed++)) || ((failed++))
 check_cask "sublime-text" && ((passed++)) || ((failed++))
+check_cask "adobe-acrobat-reader" && ((passed++)) || ((failed++))
+check_cask "onlyoffice" && ((passed++)) || ((failed++))
 check_cask "yaak" && ((passed++)) || ((failed++))
 check_cask "dbgate" && ((passed++)) || ((failed++))
 check_cask "firefox" && ((passed++)) || ((failed++))

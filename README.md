@@ -104,6 +104,7 @@ chmod +x check-installation.sh
 - **Python** - Python programming language
 - **Node.js** - JavaScript runtime
 - **Go** - Go programming language
+- **Deno** - JavaScript/TypeScript runtime
 
 ### Database
 - **PostgreSQL 16** - Advanced open source database
@@ -112,6 +113,8 @@ chmod +x check-installation.sh
 - **Alfred** - Application launcher
 - **Obsidian** - Note-taking app
 - **Sublime Text** - Code editor
+- **Adobe Acrobat Reader** - PDF reader
+- **ONLYOFFICE** - Office suite
 - **Yaak** - API client
 - **DbGate** - Database client
 - **Firefox** - Web browser
