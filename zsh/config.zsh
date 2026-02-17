@@ -129,7 +129,6 @@ alias cw="cargo watch"
 
 # Python
 alias py="python3"
-alias pip="pip3"
 alias venv="python3 -m venv"
 alias activate="source venv/bin/activate"
 
