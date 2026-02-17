@@ -19,7 +19,6 @@ This repository contains my personal dotfiles that configure a modern developmen
 ~/.config/
 ├── ghostty/          # Ghostty terminal configuration
 ├── git/              # Git configuration and global ignore rules
-├── htop/             # Htop system monitor configuration
 ├── nvim/             # Neovim configuration (LazyVim)
 ├── starship/         # Starship prompt configuration
 ├── zsh/              # ZSH shell configuration
@@ -112,7 +111,7 @@ chmod +x check-installation.sh
 ### Applications
 - **Alfred** - Application launcher
 - **Obsidian** - Note-taking app
-- **Zed** - Minimal code editor
+- **Sublime Text** - Code editor
 - **Yaak** - API client
 - **DbGate** - Database client
 - **Firefox** - Web browser
@@ -128,6 +127,7 @@ chmod +x check-installation.sh
 - **Inter** - Modern font
 - **Roboto** - Google's font
 - **Source Serif 4** - Adobe's font
+- **Operator Mono** - Installed manually (external source)
 
 ### System Utilities
 - **Zstd** - Compression tool

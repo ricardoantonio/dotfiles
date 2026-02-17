@@ -145,12 +145,13 @@ alias cp="cp -i"
 alias mv="mv -i"
 
 # Utilities
-alias cat="bat --style=auto" 2>/dev/null || alias cat="cat"
+if command -v bat >/dev/null 2>&1; then
+  alias cat="bat --style=auto"
+fi
 alias ping="ping -c 5"
 alias wget="wget -c"
 alias df="df -h"
 alias du="du -h"
-alias free="free -h"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 

@@ -206,7 +206,8 @@ else
   ((failed++))
 fi
 
-if [ "$(git config --global core.excludesfile)" = "~/.config/git/.gitignore_global" ]; then
+git_excludesfile="$(git config --global core.excludesfile)"
+if [ "$git_excludesfile" = "$HOME/.config/git/.gitignore_global" ] || [ "$git_excludesfile" = "~/.config/git/.gitignore_global" ]; then
   echo -e "${GREEN}✓${NC} Git excludesfile configured"
   ((passed++))
 else
