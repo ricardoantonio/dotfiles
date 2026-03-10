@@ -75,6 +75,7 @@ chmod +x check-installation.sh
 ## 📦 What Gets Installed
 
 ### Terminal & Shell
+
 - **Ghostty** - Modern terminal emulator
 - **ZSH Syntax Highlighting** - Syntax highlighting for ZSH commands
 - **ZSH Autosuggestions** - Command suggestions based on history
@@ -82,6 +83,7 @@ chmod +x check-installation.sh
 - **Fastfetch** - System information tool
 
 ### Development Tools
+
 - **Neovim** - Modern text editor
 - **LazyGit** - Simple terminal UI for Git
 - **Ripgrep** - Fast text search
@@ -94,6 +96,7 @@ chmod +x check-installation.sh
 - **Sleek** - SQL formatter
 
 ### Media & Processing Tools
+
 - **Poppler** - PDF rendering library
 - **FFmpeg** - Video processing tool
 - **Resvg** - SVG rendering tool
@@ -101,15 +104,18 @@ chmod +x check-installation.sh
 - **Ghostscript** - PostScript interpreter
 
 ### Programming Languages
+
 - **Python** - Python programming language
 - **Node.js** - JavaScript runtime
 - **Go** - Go programming language
 - **Deno** - JavaScript/TypeScript runtime
 
 ### Database
+
 - **PostgreSQL 16** - Advanced open source database
 
 ### Applications
+
 - **Alfred** - Application launcher
 - **Obsidian** - Note-taking app
 - **Sublime Text** - Code editor
@@ -120,11 +126,15 @@ chmod +x check-installation.sh
 - **Firefox** - Web browser
 - **Google Chrome** - Web browser
 - **Tor Browser** - Privacy-focused browser
+- **Tuta Mail** - Tuta email client
+- **Minecraft** - No words ;)
 
 ### Security
+
 - **Bitwarden** - Password manager
 
 ### Fonts
+
 - **JetBrains Mono** - Developer font
 - **JetBrains Mono Nerd Font** - Developer font with icons
 - **Inter** - Modern font
@@ -133,6 +143,7 @@ chmod +x check-installation.sh
 - **Operator Mono** - Installed manually (external source)
 
 ### System Utilities
+
 - **Zstd** - Compression tool
 
 ## ⚙️ Post-Installation
@@ -148,6 +159,7 @@ After installation, your shell will be configured with:
 ### Shell Features
 
 The ZSH configuration includes:
+
 - **50+ aliases** for Git, navigation, development tools, and utilities
 - **10+ functions** for productivity (mkcd, extract, backup, serve, etc.)
 - **Smart completion** with caching and case-insensitive matching
@@ -155,6 +167,7 @@ The ZSH configuration includes:
 - **Modern key bindings** for efficient navigation
 
 **Quick Examples:**
+
 ```bash
 # Navigation
 dev          # cd ~/Developer
@@ -188,6 +201,7 @@ chmod +x gpg-setup.sh
 ```
 
 This script will:
+
 - Generate or reuse a GPG key for your email
 - Configure gpg-agent with pinentry-mac
 - Configure Git to use the GPG key for signing commits and tags
@@ -211,20 +225,25 @@ git pull
 ## 🧪 Troubleshooting
 
 ### If ZSH configuration isn't loading
+
 ```bash
 source ~/.zshrc
 ```
 
 ### If PostgreSQL service isn't running
+
 ```bash
 brew services start postgresql@16
 ```
 
 ### If fonts aren't displaying correctly
+
 Log out and back in to macOS, or restart your terminal applications.
 
 ### If plugins show "not found" errors
+
 Make sure you've installed the required packages:
+
 ```bash
 brew install zsh-syntax-highlighting zsh-autosuggestions fzf zoxide starship
 ```
@@ -244,6 +263,7 @@ The installation creates the following directory structure:
 ## 🗑 Uninstallation
 
 To remove Homebrew packages (be careful!):
+
 ```bash
 # List what will be removed
 brew list
@@ -253,6 +273,7 @@ brew remove --force $(brew list)
 ```
 
 Manual cleanup:
+
 - Remove custom lines from `~/.zshrc`
 - Delete `~/.config` directory
 - Remove `~/Developer` directories if no longer needed

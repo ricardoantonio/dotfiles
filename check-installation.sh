@@ -163,6 +163,8 @@ check_cask "dbgate" && ((passed++)) || ((failed++))
 check_cask "firefox" && ((passed++)) || ((failed++))
 check_cask "google-chrome" && ((passed++)) || ((failed++))
 check_cask "tor-browser" && ((passed++)) || ((failed++))
+check_cask "minecraft" && ((passed++)) || ((failed++))
+check_cask "tuta-mail" && ((passed++)) || ((failed++))
 
 print_section "Checking Security Tools"
 check_command "bitwarden" && ((passed++)) || ((failed++))

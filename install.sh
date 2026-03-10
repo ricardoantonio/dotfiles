@@ -180,6 +180,8 @@ install_if_missing dbgate cask "DbGate - Database client"
 install_if_missing firefox cask "Firefox - Web browser"
 install_if_missing google-chrome cask "Google Chrome - Web browser"
 install_if_missing bitwarden "" "Bitwarden - Password manager"
+install_if_missing tuta-mail cask "Tuta Mail - Tuta email client"
+install_if_missing minecraft cask "Minecraft"
 
 # Install utilities
 print_section "Installing Utilities"
